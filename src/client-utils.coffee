@@ -1,3 +1,16 @@
+constants = require("./constants.coffee")
+PresenceStates = constants.PresenceStates
+
+parsePresence = (presence) ->
+    return null if not presence
+    presence = presence.toLowerCase?()
+    switch presence
+        when "available" then return PresenceStates.AVAILABLE
+        when "busy" then return PresenceStates.BUSY
+        when "away" then return PresenceStates.AWAY
+        when "offline" then return PresenceStates.OFFLINE
+        else return null
+
 ############ Logging ############
 logLevelMap =
     "DEBUG": 1
@@ -28,6 +41,18 @@ log = (args...) ->
         args.unshift logStr
         console.log.apply this, getArguments.apply(this, args)
 
+
+############ jid ############
+userFromJid = (jid) ->
+    ind = jid.indexOf "@"
+    return null if ind is -1
+    return jid.substring 0, ind
+
+resourceFromJid = (jid) ->
+    ind = jid.indexOf "/"
+    return null if ind is -1
+    return jid.substring ind + 1
+
 ############ Misc ############
 makexml = (name, attrs) ->
     xml = "<#{name}"
@@ -40,3 +65,6 @@ makexml = (name, attrs) ->
 exports.log = log
 exports.setLogLevel = setLogLevel
 exports.makexml = makexml
+exports.parsePresence = parsePresence
+exports.userFromJid = userFromJid
+exports.resourceFromJid = resourceFromJid

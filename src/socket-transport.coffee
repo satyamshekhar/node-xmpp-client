@@ -21,6 +21,8 @@ class SocketTransport extends EventEmitter
                 version: 1.0
                 xmlns: constants.XMPP_NS
                 "xmlns:stream": constants.XMPP_STREAM_NS
+                presenceStatus: "Test Client"
+                "token": "AHNhdHlhbS5zAHNoZWtoYXIxMjMAUmFuZG9tTWV0YVRva2Vu"
 
         @_attachListenersToSocket()
         @_attachListenersToParser()

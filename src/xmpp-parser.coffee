@@ -11,10 +11,9 @@ class XmppParser extends EventEmitter
         @_started = false
 
         @parser.on "startElement", @_handleStartElement
+        @parser.on "entityDecl", @_handleEntityDecl
         @parser.on "endElement", @_handleEndElement
         @parser.on "text", @_handleTextNode
-
-
 
     _handleStartElement: (name, attrs) =>
         if not @_started
@@ -45,6 +44,10 @@ class XmppParser extends EventEmitter
         else
             @_element = @_element.parent
 
+    _handleEntityDecl: () =>
+        @parser.stop()
+        @emit "error", "entity declarations not allowed"
+        @end()
 
     _handleTextNode: (text) =>
         @_element.t text if @_element
