@@ -168,7 +168,6 @@ class XmppClient extends EventEmitter
         @_transport.send session.toString()
 
     _handleStreamFeatures: (stanza) =>
-        return
         @_transport.removeListener "stanza", @_handleStreamFeatures
         if not stanza.is "features"
             log "ERROR", logFormat, "Invalid Stream Features received."
